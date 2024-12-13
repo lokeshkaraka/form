@@ -78,3 +78,10 @@
 - Ensure your frontend and backend are properly linked to the Firebase project.
 - Keep the App Password and API Keys secure to avoid unauthorized access.
 - Use the Firebase and Google Cloud settings to manage access permissions and security.
+
+
+
+
+
+
+if you get error controler and service of email in Multer imports use this command to avoid it and install that package(npm install express multer @types/express @types/multer --save)
