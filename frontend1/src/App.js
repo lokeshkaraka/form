@@ -22,6 +22,7 @@ const App = () => {
   };
 
   const handleFileUpload = (file) => {
+    console.log('File details:', file);
     const reader = new FileReader();
     reader.onload = (event) => {
       const data = new Uint8Array(event.target.result);
@@ -36,9 +37,11 @@ const App = () => {
   };
 
   const handleAttachmentUpload = (file) => {
-    setAttachment(file); // Save the file for sending later
-    return false; // Prevent Upload component from automatically uploading
+    console.log("Attachment details:", file);
+    setAttachment(file); // Store the file directly
+    return false; // Prevent automatic upload by Ant Design
   };
+  
 
   const handleSubmit = async () => {
     const { subject, matter } = form.getFieldsValue();
@@ -51,12 +54,15 @@ const App = () => {
     const formData = new FormData();
     formData.append("subject", subject);
     formData.append("matter", matter);
-    if (attachment) {
-      formData.append("attachment", attachment); // Include the attachment
-    }
-    formData.append("emails", JSON.stringify(emailList)); // Send email list as JSON string
-    formData.append("senderEmail", user.email); // Include the logged-in user's email
   
+    if (attachment) {
+      formData.append("attachment", attachment); // Correctly pass the file
+    }
+  
+    formData.append("emails", JSON.stringify(emailList));
+    formData.append("senderEmail", user.email);
+  // Include the logged-in user's email
+    console.log('FormData entries:', Array.from(formData.entries()));
     try {
       await axios.post("http://localhost:3001/api/send-emails", formData, {
         headers: { "Content-Type": "multipart/form-data" },
@@ -107,3 +113,8 @@ const App = () => {
 };
 
 export default App;
+
+
+
+
+
