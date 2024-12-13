@@ -1,0 +1,80 @@
+### Setting Up Firebase Authentication with Google Sign-In and Gmail Access
+
+#### Firebase Setup
+1. *Open Firebase Console*
+   - Go to the [Firebase Console](https://console.firebase.google.com/).
+   - Click on *"Go to Console"* and start a new project.
+
+2. *Create a New Project*
+   - Provide a name for your project (e.g., nestjs-emailer).
+   - Accept all terms and conditions and create the project.
+
+3. *Enable Authentication*
+   - In the Firebase Console, navigate to *Authentication*.
+   - Approve any required terms.
+   - Enable the *Google Sign-In* provider:
+     - Go to *Sign-in Providers* and select *Google*.
+     - Save the changes.
+
+4. *Set Up the Project ID and Email*
+   - Firebase will generate a *Project ID* and associate it with the email you used to log in.
+   - Save this information for later use.
+
+5. *Add a Web App*
+   - Go to the *Project Settings* in the Firebase Console.
+   - Scroll down to *"Your apps"* and click *"</> Add App"* for the web platform.
+   - Follow these steps:
+     1. *Register the App*: Provide an app name.
+     2. *Add Firebase SDK*: Copy the Firebase configuration snippet.
+     3. *Install Firebase*:
+        bash
+        npm install firebase
+        
+     4. *Create a Firebase Config File*: Save the Firebase configuration snippet in a file named firebaseConfig.ts (or .js for JavaScript projects).
+
+6. *Integrate Firebase in Your Frontend*
+   - Import the Firebase configuration file and set up Google Sign-In in your frontend code.
+
+7. *Install Firebase CLI*
+   - Install the Firebase CLI globally:
+     bash
+     npm install -g firebase-tools
+     
+   - Follow the setup instructions and retrieve the *Web API Key* from the *General Tab* in the Project Settings.
+
+#### Google Cloud APIs
+1. *Enable Google Cloud APIs*
+   - Go to the [Google Cloud Console](https://console.cloud.google.com/).
+   - Open your project and navigate to *APIs & Services > Credentials*.
+
+2. *Set Authorized Redirect URIs*
+   - In the *Credentials* section, locate the field for *Authorized Redirect URIs*.
+   - Add the following URIs:
+     - Firebase Hosting Redirect URI: https://<your-firebase-app>.firebaseapp.com/__/auth/handler
+     - Localhost URI (for development): http://localhost:3000 (or your frontend’s localhost port).
+   - Replace <your-firebase-app> with your Firebase Project ID.
+
+#### Gmail Access via SMTP
+1. *Enable Two-Step Verification*
+   - Ensure the Gmail account you’re using has *Two-Step Verification* enabled.
+   - Go to [Google Account Settings](https://myaccount.google.com/security) to enable it.
+
+2. *Generate an App Password*
+   - Open [App Passwords](https://myaccount.google.com/apppasswords) in your Google Account.
+   - Select *Other (Custom name)* and provide a name (e.g., nestjs-emailer).
+   - Generate the password and copy it. This will serve as the *SMTP password*.
+
+3. *Configure SMTP*
+   - Use the generated App Password as the pass parameter in your email transporter function.
+
+#### Final Steps
+1. *Test Firebase Authentication*
+   - Test Google Sign-In in your application using the Firebase configuration and Web API Key.
+
+2. *Test Email Sending*
+   - Configure your email transporter with the SMTP settings, including the App Password, to enable Gmail access.
+
+#### Notes
+- Ensure your frontend and backend are properly linked to the Firebase project.
+- Keep the App Password and API Keys secure to avoid unauthorized access.
+- Use the Firebase and Google Cloud settings to manage access permissions and security.
