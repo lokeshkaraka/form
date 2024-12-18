@@ -5,11 +5,12 @@ import { FiLogOut } from 'react-icons/fi';
 import { useLocation } from "react-router-dom";
 import app from '../Images/icon.png'
 
-const Navbar = () => {
+const NavBar = () => {
     // const user = location.state?.user;
     const navigate = useNavigate();
     const location = useLocation();
     const user = JSON.parse(localStorage.getItem("user"));
+    // const name = user.displayName?.split(" ")[0] || "User"
 
     const handleLogout = () => {
         localStorage.removeItem("user");
@@ -34,10 +35,10 @@ const Navbar = () => {
                     </div>
 
                 </li> */}
-                {user ? (
+                {user && location.pathname === '/product' ? (
                     <li>
                         <div className="username">
-                            Hello! <span className="username-display">{user.displayName || 'Guest'}</span>
+                            Hello! <span className="username-display">{user.displayName?.split(" ")[0] || 'Guest'}</span>
                         </div>
                     </li>
                 ) : null}
@@ -45,7 +46,7 @@ const Navbar = () => {
                 {user && location.pathname === '/product' ? (
                     <li>
                         <div className="logout-button" onClick={handleLogout}>
-                            <FiLogOut size={20} style={{ cursor: 'pointer', color: 'whitesmoke', marginLeft: '10px' }} />
+                            <FiLogOut size={20} style={{ cursor: 'pointer', color: '#fed0bb', fontWeight: 'bolder', marginLeft: '10px' }} />
                         </div>
                     </li>
                 ) : null}
@@ -54,4 +55,4 @@ const Navbar = () => {
     );
 };
 
-export default Navbar;
+export default NavBar;

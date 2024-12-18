@@ -36,7 +36,6 @@ body {
 .button-container h1 {
     font-size: 50px;
     color: #fff;
-    margin-bottom: 30px;
 }
 
 .text-container {
@@ -44,11 +43,12 @@ body {
 }
 
 .text {
-    font-size: 80px;
-    /* font-family: filson-pro, sans-serif; */
+    font-size: 84px;
+    /* font-family: 'filson-pro', sans-serif; */
     /* font-family: 'Filson Pro', sans-serif; */
     color: whitesmoke;
-    font-weight: 400;
+    font-weight: 350;
+    line-height: 5.5rem;
     overflow: hidden;
     white-space: nowrap;
     width: 0;
@@ -62,12 +62,12 @@ body {
 }
 
 .button-container .ant-btn {
-    background-color: #003049;
-    border: none;
-    border-color: 2px #dda15e;
+    background-color: #0d1b2a;
+    border-style: dashed;
+    border-color: aqua;
     color: #fff;
     font-size: 18px;
-    padding: 10px 30px;
+    padding: 10px 20px;
     height: 50px;
     font-weight: bold;
     border-radius: 10px;

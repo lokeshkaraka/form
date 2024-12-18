@@ -1,4 +1,4 @@
-@keyframes typing2 {
+/* @keyframes typing2 {
     from {
         width: 0;
     }
@@ -6,16 +6,16 @@
     to {
         width: 100%;
     }
-}
+} */
 
 .mail {
     color: #bc6c25;
     display: inline-block;
     display: inline;
-    overflow: hidden;
+    /* overflow: hidden;
     white-space: nowrap;
     width: 0;
-    animation: typing2 4s steps(300, end) forwards, blinkCaret 0.75s step-end infinite;
+    animation: typing2 4s steps(300, end) forwards, blinkCaret 0.75s step-end infinite; */
 }
 
 .welcome {

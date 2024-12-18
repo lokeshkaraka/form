@@ -19,7 +19,6 @@
 
 .navbar-link {
     color: white;
-    /* font-size: large; */
     text-decoration: none;
 }
 
@@ -30,8 +29,8 @@
 }
 
 .username {
-    margin-left: 1100px;
-    color: burlywood;
+    margin-left: 1130px;
+    color: #55dde0;
 }
 
 .username-display {

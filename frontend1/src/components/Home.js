@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import { Button } from "antd";
 import { signInWithGoogle } from '../firebaseConfig';
 import { useNavigate } from 'react-router-dom';
+import { FaGoogle } from 'react-icons/fa'
 import './HomeStyles.css';
 import man1 from '../Images/man.png';
 import hand from '../Images/hand.png';
 import space from '../Images/space.png';
-// import leaves from '../Images/leaves.png';
+import google from '../Images/google.png';
 import leavesbig from '../Images/leavesbig.png';
 import rocket from '../Images/rocket.png';
 
@@ -44,9 +45,14 @@ const Home = () => {
                 <p className='text1'>
                     The ideal framework to learn how to <br />manage all aspects of startup.
                 </p>
-                <div className="button-container" >
-                    <Button onClick={handleLogin} >Login with Google</Button>
+                <div className='button-container'>
+                    <Button onClick={handleLogin}>
+                        {/* <FaGoogle style={{ marginRight: '10px' }} /> */}
+                        <img src={google} width={18} style={{ marginRight: '5px', marginBottom: '-3px' }} />
+                        Login with Google
+                    </Button>
                 </div>
+
             </div>
 
             <div className="image-container">
