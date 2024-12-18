@@ -30,6 +30,7 @@
 .username {
     margin-left: 1130px;
     color: #55dde0;
+    cursor: pointer;
 }
 
 .username-display {

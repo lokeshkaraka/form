@@ -30,7 +30,7 @@ const NavBar = () => {
                 </li>
                 {user && location.pathname === '/product' ? (
                     <li>
-                        <div className="username">
+                        <div className="username" onClick={handleLogout}>
                             Hello! <span className="username-display">{user.displayName?.split(" ")[0] || 'Guest'}</span>
                         </div>
                     </li>
