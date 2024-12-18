@@ -13,11 +13,15 @@ export class EmailController {
     @Body('subject') subject: string,
     @Body('matter') matter: string,
     @UploadedFile() attachment: Express.Multer.File,
-    @Body('emails') emails: string[any], // Expecting array
+    @Body('emails') emails: string,
     @Body('senderEmail') senderEmail: string,
   ) {
     const emailArray = JSON.parse(emails); // Parse emails array from JSON string
-
+  
+    console.log("Parsed emails:", emailArray);
+    console.log("Attachment received:", attachment);
+  
     await this.emailService.sendEmails(subject, matter, attachment, emailArray, senderEmail);
   }
+  
 }

@@ -5,15 +5,15 @@ import Product from './components/Product';
 import NavBar from './components/NavBar';
 
 const App = () => {
-    return (
-        <Router>
-            <NavBar />
-            <Routes>
-                <Route exact path="/" element={<Home />} />
-                <Route path="/product" element={<Product />} />
-            </Routes>
-        </Router>
-    );
+  return (
+    <Router>
+      <NavBar />
+      <Routes>
+        <Route exact path="/" element={<Home />} />
+        <Route path="/product" element={<Product />} />
+      </Routes>
+    </Router>
+  );
 };
 
 export default App;
