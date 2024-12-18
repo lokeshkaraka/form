@@ -1,19 +1,27 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { Logger } from '@nestjs/common';
+
+const cors = require('cors');
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  
-  const port = process.env.PORT || 3001; // Ensure backend runs on 3001
-  
-  // Enable CORS with specific origin
-  app.enableCors({
-    origin: 'http://localhost:3000', // Allow requests from frontend
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    allowedHeaders: 'Content-Type, Authorization',
-  });
+  const config = new DocumentBuilder()
+    .setTitle('Emailer Bot')
+    .setDescription('The Bot API description')
+    .setVersion('1.0')
+    .addTag('Emailer Bot Swagger Ui')
+    .build();
 
-  await app.listen(port);
-  console.log(`Application is running on: http://localhost:${port}`);
+  app.use(cors());
+
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api', app, document);
+  await app.listen(3001);
+  Logger.log(
+    `🚀 Application is running on: http://localhost:3001/api`
+  );
 }
+
 bootstrap();
