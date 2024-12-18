@@ -1,6 +1,4 @@
-// import './App.css';
 import React, { useState } from "react";
-// import { signInWithGoogle } from '../firebaseConfig';
 import { Button, Form, Input, Upload, message, Table, Card } from "antd";
 import axios from "axios";
 import * as XLSX from "xlsx";
@@ -13,15 +11,6 @@ const Product = () => {
     const [emailList, setEmailList] = useState([]);
     const [attachment, setAttachment] = useState(null);
     const [, setFile] = useState(null);
-
-    // const handleLogin = async () => {
-    //     try {
-    //         const loggedInUser = await signInWithGoogle();
-    //         setUser(loggedInUser);
-    //     } catch (error) {
-    //         console.error("Login failed", error);
-    //     }
-    // };
 
     const handleFileUpload = (file) => {
         const reader = new FileReader();
@@ -77,10 +66,6 @@ const Product = () => {
         setEmailList([]);
         setFile(null);
     };
-
-    // if (!user) {
-    //     return <Button onClick={handleLogin}>Login with Google</Button>;
-    // }
 
     return (
         <div>
@@ -157,7 +142,6 @@ const Product = () => {
                 </Form>
                 <br />
                 <Table
-                    // style={{ width: '1000px' }}
                     dataSource={emailList.map((email, index) => ({ key: index, email }))}
                     columns={[{
                         title: <span style={{ color: '#f2e9e4', fontSize: '17px' }}>Emails</span>,

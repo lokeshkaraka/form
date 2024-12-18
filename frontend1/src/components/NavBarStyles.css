@@ -23,7 +23,6 @@
 }
 
 .navbar-link:hover {
-    /* text-decoration: underline; */
     transition: ease-out 0.8s;
     color: brown;
 }

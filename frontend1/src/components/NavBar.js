@@ -3,14 +3,13 @@ import { Link, useNavigate } from 'react-router-dom';
 import './NavBarStyles.css';
 import { FiLogOut } from 'react-icons/fi';
 import { useLocation } from "react-router-dom";
-import app from '../Images/icon.png'
+// import app from '../Images/icon.png'
 
 const NavBar = () => {
     // const user = location.state?.user;
     const navigate = useNavigate();
     const location = useLocation();
     const user = JSON.parse(localStorage.getItem("user"));
-    // const name = user.displayName?.split(" ")[0] || "User"
 
     const handleLogout = () => {
         localStorage.removeItem("user");
@@ -29,12 +28,6 @@ const NavBar = () => {
                 <li className="navbar-item">
                     <Link to="/product" className="navbar-link">Product</Link>
                 </li>
-                {/* <li>
-                    <div className="username">
-                        Hello! <span className="username-display">{user?.displayName || 'Guest'}</span>
-                    </div>
-
-                </li> */}
                 {user && location.pathname === '/product' ? (
                     <li>
                         <div className="username">

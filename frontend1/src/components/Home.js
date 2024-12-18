@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Button } from "antd";
 import { signInWithGoogle } from '../firebaseConfig';
 import { useNavigate } from 'react-router-dom';
-import { FaGoogle } from 'react-icons/fa'
 import './HomeStyles.css';
 import man1 from '../Images/man.png';
 import hand from '../Images/hand.png';
@@ -47,8 +46,7 @@ const Home = () => {
                 </p>
                 <div className='button-container'>
                     <Button onClick={handleLogin}>
-                        {/* <FaGoogle style={{ marginRight: '10px' }} /> */}
-                        <img src={google} width={18} style={{ marginRight: '5px', marginBottom: '-3px' }} />
+                        <img src={google} width={18} alt='login with google' style={{ marginRight: '5px', marginBottom: '-3px' }} />
                         Login with Google
                     </Button>
                 </div>
@@ -58,7 +56,6 @@ const Home = () => {
             <div className="image-container">
                 <div>
                     <img src={leavesbig} alt="man illustration" className='leavesbig' />
-                    {/* <img src={leaves} alt="man illustration" className='leaves' /> */}
                 </div>
                 <img src={rocket} alt="man illustration" className='rocket' />
 
