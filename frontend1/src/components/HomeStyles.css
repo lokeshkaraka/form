@@ -1,0 +1,119 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Playwrite+GB+J+Guides:ital@0;1&family=Schoolbell&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Filson+Pro&display=swap');
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+@keyframes typing2 {
+    from {
+        width: 0;
+    }
+
+    to {
+        width: 100%;
+    }
+}
+
+.home-container {
+    height: 100vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(155deg, #17819c, #ffcdb2);
+    padding: 0 100px;
+    box-sizing: border-box;
+}
+
+/* 219ebc */
+.button-container {
+    flex: 1;
+}
+
+.button-container h1 {
+    font-size: 50px;
+    color: #fff;
+    margin-bottom: 30px;
+}
+
+.text-container {
+    margin-bottom: 260px;
+}
+
+.text {
+    font-size: 80px;
+    /* font-family: filson-pro, sans-serif; */
+    /* font-family: 'Filson Pro', sans-serif; */
+    color: whitesmoke;
+    font-weight: 400;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 0;
+    animation: typing2 4s steps(300, end) forwards, blinkCaret 0.75s step-end infinite;
+}
+
+.text1 {
+    font-size: 25px;
+    margin-top: -30px;
+    color: whitesmoke;
+}
+
+.button-container .ant-btn {
+    background-color: #003049;
+    border: none;
+    border-color: 2px #dda15e;
+    color: #fff;
+    font-size: 18px;
+    padding: 10px 30px;
+    height: 50px;
+    font-weight: bold;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.image-container {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.image {
+    width: 600px;
+    height: auto;
+}
+
+.imagespace {
+    width: 70px;
+    height: 70px;
+    margin-right: -200px;
+}
+
+
+.imagehand {
+    width: 100px;
+    height: 120px;
+    margin-right: -150px;
+    margin-top: 95px;
+}
+
+.rocket {
+    width: 90px;
+    height: 90px;
+    margin-right: -400px;
+    margin-top: -50px;
+}
+
+.leavesbig {
+    width: 100px;
+    height: 140px;
+    margin-right: 385px;
+    margin-top: 325px;
+}
+
+/* .leaves {
+    width: 70px;
+    height: 70px;
+} */

@@ -1,0 +1,39 @@
+.navbar {
+    padding: 25px;
+    background-color: #282c34;
+    /* background-color: transparent; */
+    /* background: linear-gradient(90deg, #4FB5C8, #E1C5B0); */
+}
+
+.navbar-list {
+    display: flex;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.navbar-item {
+    margin: 0 10px;
+    font-weight: bold;
+}
+
+.navbar-link {
+    color: white;
+    /* font-size: large; */
+    text-decoration: none;
+}
+
+.navbar-link:hover {
+    /* text-decoration: underline; */
+    transition: ease-out 0.8s;
+    color: brown;
+}
+
+.username {
+    margin-left: 1100px;
+    color: burlywood;
+}
+
+.username-display {
+    margin-left: 5px;
+}
