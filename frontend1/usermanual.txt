@@ -63,10 +63,9 @@
    - Open [App Passwords](https://myaccount.google.com/apppasswords) in your Google Account.
    - Select *Other (Custom name)* and provide a name (e.g., nestjs-emailer).
    - Generate the password and copy it. This will serve as the *SMTP password*.
-
 3. *Configure SMTP*
    - Use the generated App Password as the pass parameter in your email transporter function.
-
+ugsi lznk neyk rtpy
 #### Final Steps
 1. *Test Firebase Authentication*
    - Test Google Sign-In in your application using the Firebase configuration and Web API Key.

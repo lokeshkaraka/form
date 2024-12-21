@@ -18,18 +18,22 @@
 }
 
 .navbar-link {
-    color: white;
+    /* color: #f77f00; */
+    /* color: #ffbf69; */
+    color: #6fffe9;
+    font-size: large;
     text-decoration: none;
 }
 
 .navbar-link:hover {
     transition: ease-out 0.8s;
-    color: brown;
+    color: #cbf3f0;
 }
 
 .username {
     margin-left: 1130px;
-    color: #55dde0;
+    /* color: #55dde0; */
+    color: #ee964b;
     cursor: pointer;
 }
 

@@ -9,10 +9,16 @@ export class EmailService {
     attachment: Express.Multer.File,
     emails: string[],
     senderEmail: string,
+    // appPassword: string
   ) {
     const transporter = nodemailer.createTransport({
       service: 'gmail',
-      auth: { user: senderEmail, pass: 'apfk mhmb ocyi teeh' }, // Use app password
+      auth: {
+        user: senderEmail, pass:
+          // appPassword
+          'esnh scug lguh jisc'
+        // 'cszb qlfw owqu gagg'
+      },
     });
 
     // Loop through each recipient and send an email
@@ -24,12 +30,12 @@ export class EmailService {
         text: matter,
         attachments: attachment
           ? [
-              {
-                filename: attachment.originalname,
-                content: attachment.buffer,
-                contentType: attachment.mimetype,
-              },
-            ]
+            {
+              filename: attachment.originalname,
+              content: attachment.buffer,
+              contentType: attachment.mimetype,
+            },
+          ]
           : [],
       };
 

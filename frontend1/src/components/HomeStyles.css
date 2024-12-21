@@ -31,6 +31,11 @@ body {
 /* 219ebc */
 .button-container {
     flex: 1;
+    margin-top: 50px;
+}
+
+.login-google {
+    color: #ffdab9;
 }
 
 .button-container h1 {
@@ -46,7 +51,7 @@ body {
     font-size: 84px;
     color: whitesmoke;
     font-weight: 350;
-    line-height: 5.5rem;
+    line-height: 6rem;
     overflow: hidden;
     white-space: nowrap;
     width: 0;
@@ -70,6 +75,10 @@ body {
     font-weight: bold;
     border-radius: 10px;
     cursor: pointer;
+}
+
+.button-container .ant-btn:hover {
+    background-color: #17819c;
 }
 
 .image-container {

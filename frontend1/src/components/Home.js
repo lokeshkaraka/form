@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button } from "antd";
+import { Button, Alert } from "antd";
 import { signInWithGoogle } from '../firebaseConfig';
 import { useNavigate } from 'react-router-dom';
 import './HomeStyles.css';
@@ -13,6 +13,8 @@ import rocket from '../Images/rocket.png';
 
 const Home = () => {
     const [, setUser] = useState(null);
+    const [message, setMessage] = useState('');
+    const [alertVisible, setAlertVisible] = useState(false);
     const navigate = useNavigate();
 
     const handleLogin = async () => {
@@ -25,14 +27,43 @@ const Home = () => {
             };
             localStorage.setItem("user", JSON.stringify(userData));
             setUser(userData);
-            navigate('/product');
+            setMessage('Login successful');
+            setAlertVisible(true)
+
+            setTimeout(() => {
+                setAlertVisible(false);
+                navigate('/product');
+            }, [1000])
+            // navigate('/product');
         } catch (error) {
+            setAlertVisible(true);
+            setMessage('Login Crendentials are wrong');
             console.error("Login failed", error);
+            setTimeout(() => setAlertVisible(false), 3000);
         }
     };
 
     return (
         <div className="home-container">
+            {alertVisible && (
+                <Alert
+                    message={message}
+                    type="success"
+                    showIcon
+                    style={{
+                        position: 'absolute',
+                        top: '20px',
+                        left: '50%',
+                        transform: 'translateX(-50%)',
+                        zIndex: 1000,
+                        // width: '240px',
+                        width: message === 'Login Successful' ? '240px' : '180px',
+                        textAlign: 'center',
+                        color: 'black',
+                    }}
+                />
+            )}
+
             <div className='text-container'>
                 <p>
                     <h1 className='text'>
@@ -47,7 +78,7 @@ const Home = () => {
                 <div className='button-container'>
                     <Button onClick={handleLogin}>
                         <img src={google} width={18} alt='login with google' style={{ marginRight: '5px', marginBottom: '-3px' }} />
-                        Login with Google
+                        <span className='login-google'>Login with Google</span>
                     </Button>
                 </div>
 
