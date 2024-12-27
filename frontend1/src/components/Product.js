@@ -264,19 +264,17 @@ const Product = () => {
     };
 
 
-    // const excelDateToJSDate = (serial) => {
-    //     const utc_days = Math.floor(serial - 25569);
-    //     const utc_value = utc_days * 86400;
-    //     const date = new Date(utc_value * 1000);
+    const excelDateToJSDate = (serial) => {
+        const utc_days = Math.floor(serial - 25569);
+        const utc_value = utc_days * 86400;
+        const date = new Date(utc_value * 1000);
 
-    //     const day = date.getDate();
-    //     const month = date.toLocaleString('default', { month: 'long' });
-    //     const year = date.getFullYear();
+        const day = date.getDate();
+        const month = date.toLocaleString('default', { month: 'long' });
+        const year = date.getFullYear();
 
-    //     return `${day}-${month}-${year}`;
-    // };
-
-
+        return `${day}-${month}-${year}`;
+    };
 
 
 
@@ -286,7 +284,7 @@ const Product = () => {
         const htmlContent = `
             <div style="font-family: Arial, sans-serif; max-width: 1800px; margin: 0 auto; padding: 20px; border: 1px solid #ccc;">
         <div style="text-align: center; margin-bottom: 20px;">
-            <h1 style="font-size: 20px; margin: 0;">SCHEMAX EXPERT TECHNO CRAFTS PRIVATE LIMITED</h1>
+            <h1 style="font-size: 18px; margin: 0;">SCHEMAX EXPERT TECHNO CRAFTS PRIVATE LIMITED</h1>
         <div>
 
     <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;border: 1px solid black;">
@@ -305,7 +303,7 @@ const Product = () => {
             <td style="padding: 2px; font-size: 10px; font-weight: bold; border: 1px solid black;">Employee Name:</td>
             <td style="padding: 2px; font-size: 10px; border: 1px solid black;">${employeeData[2] || 'N/A'}</td>
             <td style="padding: 2px; font-size: 10px; font-weight: bold; border: 1px solid black;">Date of Joining:</td>
-            <td style="padding: 2px; font-size: 10px; border: 1px solid black;">${employeeData[6] || 'N/A'}</td>
+            <td style="padding: 2px; font-size: 10px; border: 1px solid black;">${excelDateToJSDate || 'N/A'}</td>
         </tr>
         <tr>
             <td style="padding: 2px; font-size: 10px; font-weight: bold; border: 1px solid black;">Band:</td>
