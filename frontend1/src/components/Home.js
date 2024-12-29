@@ -67,14 +67,13 @@ const Home = () => {
             <div className='text-container'>
                 <p>
                     <h1 className='text'>
-                       
-                        Effortless PaySlip Managemant
+                        Effortless PaySlip
                         <br />
-                        Solution
+                        Management Bot
                     </h1>
                 </p>
                 <p className='text1'>
-                    Automate Payroll with ease, delivering accurate Payslips <br /> directly to employee's Inboxes
+                    Automate Payroll with ease, delivering accurate<br /> Payslips directly to employee's Inboxes
                 </p>
                 <div className='button-container'>
                     <Button onClick={handleLogin}>

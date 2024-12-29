@@ -28,7 +28,6 @@ body {
     box-sizing: border-box;
 }
 
-/* 219ebc */
 .button-container {
     flex: 1;
     margin-top: 50px;
@@ -51,7 +50,7 @@ body {
     font-size: 84px;
     color: whitesmoke;
     font-weight: 350;
-    line-height: 6rem;
+    /* line-height: 7rem; */
     overflow: hidden;
     white-space: nowrap;
     width: 0;

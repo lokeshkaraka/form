@@ -26,7 +26,7 @@ const NavBar = () => {
                     <Link to="/" className="navbar-link">Home</Link>
                 </li>
                 <li className="navbar-item">
-                    <Link to="/product" className="navbar-link"> Demo Product</Link>
+                    <Link to="/product" className="navbar-link">Product</Link>
                 </li>
                 {user && location.pathname === '/product' ? (
                     <li>
