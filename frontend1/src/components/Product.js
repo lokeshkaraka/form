@@ -5,7 +5,9 @@ import * as XLSX from "xlsx";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import './ProductStyles.css';
-import logo from './SchemXBlackLogo.png'
+import logo from './SchemXBlackLogo.png';
+import dayjs from 'dayjs';
+import {  Checkbox } from 'antd';
 
 const Product = () => {
     const user = JSON.parse(localStorage.getItem("user"));
@@ -14,6 +16,11 @@ const Product = () => {
     const [, setAttachment] = useState(null);
     const [, setFile] = useState(null);
     const [excelData, setExcelData] = useState([]);
+    const [columns, setColumns] = useState([]);
+    const [checked, setChecked] = useState(false); // Checkbox state
+    const [isSendEnabled, setIsSendEnabled] = useState(false); // B
+
+    const currentMonthYear = dayjs().format('MMMM YYYY');
 
     const handleFileUpload = (file) => {
         const reader = new FileReader();
@@ -25,21 +32,30 @@ const Product = () => {
                 const sheet = workbook.Sheets[sheetName];
                 const jsonData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
 
+                // Extract headers and rows
                 const headers = jsonData[0];
-                const emailIndex = headers.findIndex((header) => header && header.toLowerCase() === "email");
+                const rows = jsonData.slice(1);
 
-                if (emailIndex === -1) {
-                    alert("No 'Email' column found in the uploaded Excel file.");
-                    return;
-                }
+                // Generate table columns dynamically
+                const tableColumns = headers.map((header, index) => ({
+                    title: header || `Column ${index + 1}`,
+                    dataIndex: index, // Use the column index as key
+                    key: index,
+                    render: (text) => text || "-", // Show "-" if the cell is empty
+                }));
 
-                const dataRows = jsonData.slice(1).map(row => {
-                    const email = row[emailIndex];
-                    return { ...row, email };
+                // Map rows to objects for the table
+                const tableData = rows.map((row, rowIndex) => {
+                    const rowObject = {};
+                    headers.forEach((_, colIndex) => {
+                        rowObject[colIndex] = row[colIndex]; // Use column index as key
+                    });
+                    rowObject.key = rowIndex; // Add a unique key for each row
+                    return rowObject;
                 });
 
-                setExcelData(dataRows); // Store parsed data
-                setEmailList(dataRows.map(row => row.email)); // Update email list
+                setColumns(tableColumns);
+                setExcelData(tableData);
             } catch (error) {
                 console.error("Error processing the file:", error);
                 alert("Failed to process the file. Please ensure it is a valid Excel file.");
@@ -47,13 +63,18 @@ const Product = () => {
         };
 
         reader.readAsArrayBuffer(file);
-        setFile(file);
     };
 
+    const handleCheckboxChange = (e) => {
+        setChecked(e.target.checked);
+        setIsSendEnabled(e.target.checked);
+    };
     const handleAttachmentUpload = (file) => {
         setAttachment(file);
         return false;
     };
+
+
 
 
     const excelDateToJSDate = (serial) => {
@@ -252,32 +273,54 @@ const Product = () => {
     };
 
     return (
-        <div>
+        <div >
             <Card>
                 <h2 className="welcome">
                     Welcome, <span className="mail">{user?.email || "Guest"}</span>
                 </h2>
 
-                <Form form={form} layout="vertical" style={{ width: '500px', alignItems: 'center' }}>
+                <Form form={form} initialValues={{
+                    subject: 'Hello!',
+                    matter: `Kindly find attached the payslip for the month of  ${currentMonthYear}`,
+                }} layout="vertical" style={{ width: '500px', alignItems: 'center' }}>
                     <Form.Item
                         name="subject"
                         label={<span style={{ color: '#386641', fontWeight: 'bold' }}>Subject</span>}
-                        rules={[{ required: true }]}
+                       
                     >
                         <Input />
                     </Form.Item>
                     <Form.Item
                         name="matter"
                         label={<span style={{ color: '#386641', fontWeight: 'bold' }}>Description/Body</span>}
-                        rules={[{ required: true }]}
+                       
                     >
                         <Input.TextArea />
                     </Form.Item>
 
                     <div style={{ display: "flex", gap: "20px", flexWrap: "wrap" }}>
+
+
+                        <div style={{ flex: "1" }}>
+                            <Form.Item
+                                name="uploadExcel"
+                                label={<span style={{ color: "#386641", fontWeight: "bold", }}>Upload  Employees PaySlip Details</span>}
+                            >
+                                <Upload
+                                    beforeUpload={(file) => handleFileUpload(file) && false}
+                                    showUploadList={{
+                                        showRemoveIcon: true,
+                                        onRemove: handleExcelRemove,
+                                    }}
+                                >
+                                    <Button>Upload here! 📤</Button>
+                                </Upload>
+                            </Form.Item>
+                        </div>
                         <div style={{ flex: "1" }}>
                             <Form.Item
                                 name="attachment"
+                                hidden
                                 label={<span style={{ color: "#386641", fontWeight: "bold" }}>Attachment</span>}
                             >
                                 <Upload
@@ -289,44 +332,36 @@ const Product = () => {
                                 </Upload>
                             </Form.Item>
                         </div>
-
-                        <div style={{ flex: "1" }}>
-                            <Form.Item
-                                name="uploadExcel"
-                                label={<span style={{ color: "#386641", fontWeight: "bold" }}>Upload Mail List</span>}
-                            >
-                                <Upload
-                                    beforeUpload={(file) => handleFileUpload(file) && false}
-                                    showUploadList={{
-                                        showRemoveIcon: true,
-                                        onRemove: handleExcelRemove,
-                                    }}
-                                >
-                                    <Button>Upload Excel (Emails)</Button>
-                                </Upload>
-                            </Form.Item>
-                        </div>
                     </div>
                 </Form>
                 <br />
+
                 <Table
-                    dataSource={emailList.map((email, index) => ({ key: index, email }))}
-                    columns={[{
-                        title: <span style={{ color: '#f2e9e4', fontSize: '17px' }}>Emails</span>,
-                        dataIndex: "email",
-                        key: "email",
-                        onHeaderCell: () => ({
-                            style: {
-                                backgroundColor: '#778da9',
-                                color: '#ffffff',
-                            },
-                        }),
-                    }]}
+                    title={() => "Check Details Once! 😊"}
+                    dataSource={excelData}
+                    columns={columns}
+                    bordered
+                    pagination={{ pageSize: 10 }}
+                    style={{ marginTop: 20 }}
+                    scroll={{ x: true }}
                 />
+
+
                 <br />
-                <Button onClick={handleSubmit} className="button-mail">
-                    Send Emails
-                </Button>
+                <Form.Item>
+                    <Checkbox checked={checked} onChange={handleCheckboxChange}>
+                        I agree to send emails
+                    </Checkbox>
+                </Form.Item>
+
+                <Form.Item>
+                    <Button 
+                        type="primary" 
+                        disabled={!isSendEnabled} 
+                        onClick={handleSubmit} >
+                        Send Emails
+                    </Button>
+                </Form.Item>
             </Card>
         </div>
     );

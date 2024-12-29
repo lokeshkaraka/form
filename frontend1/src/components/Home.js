@@ -67,13 +67,14 @@ const Home = () => {
             <div className='text-container'>
                 <p>
                     <h1 className='text'>
-                        Your next big
+                       
+                        Effortless PaySlip Managemant
                         <br />
-                        idea starts here
+                        Solution
                     </h1>
                 </p>
                 <p className='text1'>
-                    The ideal framework to learn how to <br />manage all aspects of startup.
+                    Automate Payroll with ease, delivering accurate Payslips <br /> directly to employee's Inboxes
                 </p>
                 <div className='button-container'>
                     <Button onClick={handleLogin}>
