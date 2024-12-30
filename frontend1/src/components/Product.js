@@ -38,10 +38,17 @@ const Product = () => {
                     title: header || `Column ${index + 1}`,
                     dataIndex: index,
                     key: index,
-                    render: (text) => text || "-",
+                    render: (text, record, index) => {
+                        if (
+                            typeof text === "number" &&
+                            text > 40000 &&
+                            text < 60000
+                        ) {
+                            return excelDateToJSDate(text);
+                        }
+                        return text !== null && text !== undefined ? text : "-";
+                    },
                 }));
-
-
 
                 const tableData = rows.map((row, rowIndex) => {
                     const rowObject = {};
@@ -51,7 +58,6 @@ const Product = () => {
                     rowObject.key = rowIndex;
                     return rowObject;
                 });
-
 
                 if (emailIndex === -1) {
                     alert("No 'Email' column found in the uploaded Excel file.");
@@ -85,15 +91,14 @@ const Product = () => {
         setIsSendEnabled(e.target.checked);
     };
 
-
     const excelDateToJSDate = (serial) => {
-        const utc_days = Math.floor(serial - 25569);
-        const utc_value = utc_days * 86400;
-        const date = new Date(utc_value * 1000);
+        const excelEpoch = new Date(Date.UTC(1899, 11, 30));
+        const days = serial;
+        const date = new Date(excelEpoch.getTime() + days * 86400 * 1000);
 
-        const day = date.getDate();
-        const month = date.toLocaleString('default', { month: 'long' });
-        const year = date.getFullYear();
+        const day = date.getUTCDate();
+        const month = date.toLocaleString('default', { month: 'short' });
+        const year = date.getUTCFullYear();
 
         return `${day}-${month}-${year}`;
     };
@@ -112,7 +117,7 @@ const Product = () => {
                 <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; border: 1px solid black;">
                     <tr>
                         <td colspan="4" style="padding: 3px; background-color: skyblue; text-align: center; font-size: 12px; font-weight: bold; color: black;">
-                            Pay Slip for the month of DECEMBER' 2024
+                            Pay Slip for the month of ${dayjs().format("MMMM YYYY")}
                         </td>
                     </tr>
                     <tr>
@@ -125,7 +130,7 @@ const Product = () => {
                         <td style="padding: 2px; font-size: 10px; font-weight: bold; border: 1px solid black;">Employee Name</td>
                         <td style="padding: 2px; font-size: 10px; border: 1px solid black;">${employeeData[3] || 'N/A'}</td>
                         <td style="padding: 2px; font-size: 10px; font-weight: bold; border: 1px solid black;">Date of Joining</td>
-                        <td style="padding: 2px; font-size: 10px; border: 1px solid black;">${employeeData[6] || 'N/A'}</td>
+                        <td style="padding: 2px; font-size: 10px; border: 1px solid black;">${excelDateToJSDate(employeeData[6]) || 'N/A'}</td>
                     </tr>
                     <tr>
                         <td style="padding: 2px; font-size: 10px; font-weight: bold; border: 1px solid black;">Band</td>
@@ -160,7 +165,7 @@ const Product = () => {
                         <td style="padding: 2px; font-size: 10px; font-weight: bold; border: 1px solid black;">LOP Days</td>
                         <td style="padding: 2px; font-size: 10px; border: 1px solid black;">${employeeData[14]}</td>
                         <td style="padding: 2px; font-size: 10px; font-weight: bold; border: 1px solid black;">No of Days Paid</td>
-                        <td style="padding: 2px; font-size: 10px; border: 1px solid black;">${excelDateToJSDate(employeeData[12]) || 'N/A'}</td>
+                        <td style="padding: 2px; font-size: 10px; border: 1px solid black;">${employeeData[12] || 'N/A'}</td>
                     </tr>
 
                     <tr style="background-color: skyblue;text-align: center;font-weight:bold">

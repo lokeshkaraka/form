@@ -37,7 +37,7 @@ const Home = () => {
             // navigate('/product');
         } catch (error) {
             setAlertVisible(true);
-            setMessage('Login Crendentials are wrong');
+            setMessage('Login Crendentials are Wrong');
             console.error("Login failed", error);
             setTimeout(() => setAlertVisible(false), 3000);
         }
@@ -57,7 +57,7 @@ const Home = () => {
                         transform: 'translateX(-50%)',
                         zIndex: 1000,
                         // width: '240px',
-                        width: message === 'Login Successful' ? '240px' : '180px',
+                        width: message === 'Login Successful' ? '240px' : '240px',
                         textAlign: 'center',
                         color: 'black',
                     }}
