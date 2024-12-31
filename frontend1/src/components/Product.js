@@ -504,7 +504,7 @@ const Product = () => {
 
                 <Form form={form}
                     initialValues={{
-                        subject: 'Hello!',
+                        subject: `PaySlip For ${currentMonthYear}`,
                         matter: `Kindly find attached the payslip for the month of  ${currentMonthYear}`,
                     }}
                     layout="vertical"
