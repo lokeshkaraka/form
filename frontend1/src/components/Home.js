@@ -37,7 +37,7 @@ const Home = () => {
             // navigate('/product');
         } catch (error) {
             setAlertVisible(true);
-            setMessage('Login Crendentials are wrong');
+            setMessage('Login Crendentials are Wrong');
             console.error("Login failed", error);
             setTimeout(() => setAlertVisible(false), 3000);
         }
@@ -57,7 +57,7 @@ const Home = () => {
                         transform: 'translateX(-50%)',
                         zIndex: 1000,
                         // width: '240px',
-                        width: message === 'Login Successful' ? '240px' : '180px',
+                        width: message === 'Login Crendentials are Wrong' ? '240px' : '180px',
                         textAlign: 'center',
                         color: 'black',
                     }}
@@ -67,13 +67,13 @@ const Home = () => {
             <div className='text-container'>
                 <p>
                     <h1 className='text'>
-                        Your next big
+                        Effortless PaySlip
                         <br />
-                        idea starts here
+                        Management Bot
                     </h1>
                 </p>
                 <p className='text1'>
-                    The ideal framework to learn how to <br />manage all aspects of startup.
+                    Automate Payroll with ease, delivering accurate<br /> Payslips directly to employee's Inboxes
                 </p>
                 <div className='button-container'>
                     <Button onClick={handleLogin}>

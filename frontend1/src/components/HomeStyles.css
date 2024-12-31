@@ -28,7 +28,6 @@ body {
     box-sizing: border-box;
 }
 
-/* 219ebc */
 .button-container {
     flex: 1;
     margin-top: 50px;
@@ -44,14 +43,14 @@ body {
 }
 
 .text-container {
-    margin-bottom: 260px;
+    margin-bottom: 50px;
 }
 
 .text {
     font-size: 84px;
     color: whitesmoke;
     font-weight: 350;
-    line-height: 6rem;
+    /* line-height: 7rem; */
     overflow: hidden;
     white-space: nowrap;
     width: 0;
@@ -84,6 +83,7 @@ body {
 .image-container {
     flex: 1;
     display: flex;
+    margin-top: 150px;
     justify-content: flex-end;
 }
 

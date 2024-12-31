@@ -6,6 +6,8 @@ import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import './ProductStyles.css';
 import logo from './SchemXBlackLogo.png'
+import { Checkbox } from 'antd';
+import dayjs from 'dayjs';
 
 const Product = () => {
     const user = JSON.parse(localStorage.getItem("user"));
@@ -14,7 +16,10 @@ const Product = () => {
     const [, setAttachment] = useState(null);
     const [, setFile] = useState(null);
     const [excelData, setExcelData] = useState([]);
-
+    const [checked, setChecked] = useState(false);
+    const [isSendEnabled, setIsSendEnabled] = useState(false);
+    const [columns, setColumns] = useState([]);
+    const currentMonthYear = dayjs().format('MMMM YYYY');
     const handleFileUpload = (file) => {
         const reader = new FileReader();
         reader.onload = (event) => {
@@ -26,7 +31,33 @@ const Product = () => {
                 const jsonData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
 
                 const headers = jsonData[0];
+                const rows = jsonData.slice(1);
                 const emailIndex = headers.findIndex((header) => header && header.toLowerCase() === "email");
+
+                const tableColumns = headers.map((header, index) => ({
+                    title: header || `Column ${index + 1}`,
+                    dataIndex: index,
+                    key: index,
+                    render: (text, record, index) => {
+                        if (
+                            typeof text === "number" &&
+                            text > 40000 &&
+                            text < 60000
+                        ) {
+                            return excelDateToJSDate(text);
+                        }
+                        return text !== null && text !== undefined ? text : "-";
+                    },
+                }));
+
+                const tableData = rows.map((row, rowIndex) => {
+                    const rowObject = {};
+                    headers.forEach((_, colIndex) => {
+                        rowObject[colIndex] = row[colIndex];
+                    });
+                    rowObject.key = rowIndex;
+                    return rowObject;
+                });
 
                 if (emailIndex === -1) {
                     alert("No 'Email' column found in the uploaded Excel file.");
@@ -37,8 +68,8 @@ const Product = () => {
                     const email = row[emailIndex];
                     return { ...row, email };
                 });
-
-                setExcelData(dataRows); // Store parsed data
+                setColumns(tableColumns);
+                setExcelData(tableData); // Store parsed data
                 setEmailList(dataRows.map(row => row.email)); // Update email list
             } catch (error) {
                 console.error("Error processing the file:", error);
@@ -55,15 +86,19 @@ const Product = () => {
         return false;
     };
 
+    const handleCheckboxChange = (e) => {
+        setChecked(e.target.checked);
+        setIsSendEnabled(e.target.checked);
+    };
 
     const excelDateToJSDate = (serial) => {
-        const utc_days = Math.floor(serial - 25569);
-        const utc_value = utc_days * 86400;
-        const date = new Date(utc_value * 1000);
+        const excelEpoch = new Date(Date.UTC(1899, 11, 30));
+        const days = serial;
+        const date = new Date(excelEpoch.getTime() + days * 86400 * 1000);
 
-        const day = date.getDate();
-        const month = date.toLocaleString('default', { month: 'long' });
-        const year = date.getFullYear();
+        const day = date.getUTCDate();
+        const month = date.toLocaleString('default', { month: 'short' });
+        const year = date.getUTCFullYear();
 
         return `${day}-${month}-${year}`;
     };
@@ -228,7 +263,7 @@ const Product = () => {
                 <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; border: 1px solid black;">
                     <tr>
                         <td colspan="4" style="padding: 3px; background-color: skyblue; text-align: center; font-size: 12px; font-weight: bold; color: black;">
-                            Pay Slip for the month of DECEMBER' 2024
+                            Pay Slip for the month of ${dayjs().format("MMMM YYYY")}
                         </td>
                     </tr>
                     <tr>
@@ -241,7 +276,7 @@ const Product = () => {
                         <td style="padding: 2px; font-size: 10px; font-weight: bold; border: 1px solid black;">Employee Name</td>
                         <td style="padding: 2px; font-size: 10px; border: 1px solid black;">${employeeData[3] || 'N/A'}</td>
                         <td style="padding: 2px; font-size: 10px; font-weight: bold; border: 1px solid black;">Date of Joining</td>
-                        <td style="padding: 2px; font-size: 10px; border: 1px solid black;">${employeeData[6] || 'N/A'}</td>
+                        <td style="padding: 2px; font-size: 10px; border: 1px solid black;">${excelDateToJSDate(employeeData[6]) || 'N/A'}</td>
                     </tr>
                     <tr>
                         <td style="padding: 2px; font-size: 10px; font-weight: bold; border: 1px solid black;">Band</td>
@@ -276,7 +311,7 @@ const Product = () => {
                         <td style="padding: 2px; font-size: 10px; font-weight: bold; border: 1px solid black;">LOP Days</td>
                         <td style="padding: 2px; font-size: 10px; border: 1px solid black;">${employeeData[14]}</td>
                         <td style="padding: 2px; font-size: 10px; font-weight: bold; border: 1px solid black;">No of Days Paid</td>
-                        <td style="padding: 2px; font-size: 10px; border: 1px solid black;">${excelDateToJSDate(employeeData[12]) || 'N/A'}</td>
+                        <td style="padding: 2px; font-size: 10px; border: 1px solid black;">${employeeData[12] || 'N/A'}</td>
                     </tr>
 
                     <tr style="background-color: skyblue;text-align: center;font-weight:bold">
@@ -467,7 +502,14 @@ const Product = () => {
                     Welcome, <span className="mail">{user?.email || "Guest"}</span>
                 </h2>
 
-                <Form form={form} layout="vertical" style={{ width: '500px', alignItems: 'center' }}>
+                <Form form={form}
+                    initialValues={{
+                        subject: 'Hello!',
+                        matter: `Kindly find attached the payslip for the month of  ${currentMonthYear}`,
+                    }}
+                    layout="vertical"
+                    style={{ width: '500px', alignItems: 'center' }}
+                >
                     <Form.Item
                         name="subject"
                         label={<span style={{ color: '#386641', fontWeight: 'bold' }}>Subject</span>}
@@ -486,21 +528,6 @@ const Product = () => {
                     <div style={{ display: "flex", gap: "20px", flexWrap: "wrap" }}>
                         <div style={{ flex: "1" }}>
                             <Form.Item
-                                name="attachment"
-                                label={<span style={{ color: "#386641", fontWeight: "bold" }}>Attachment</span>}
-                            >
-                                <Upload
-                                    maxCount={1}
-                                    beforeUpload={handleAttachmentUpload}
-                                    showUploadList={{ showRemoveIcon: true }}
-                                >
-                                    <Button>Upload Attachment (PDF)</Button>
-                                </Upload>
-                            </Form.Item>
-                        </div>
-
-                        <div style={{ flex: "1" }}>
-                            <Form.Item
                                 name="uploadExcel"
                                 label={<span style={{ color: "#386641", fontWeight: "bold" }}>Upload Mail List</span>}
                             >
@@ -515,25 +542,45 @@ const Product = () => {
                                 </Upload>
                             </Form.Item>
                         </div>
+                        <div style={{ flex: "1" }}>
+                            <Form.Item
+                                name="attachment"
+                                hidden
+                                label={<span style={{ color: "#386641", fontWeight: "bold" }}>Attachment</span>}
+                            >
+                                <Upload
+                                    maxCount={1}
+                                    beforeUpload={handleAttachmentUpload}
+                                    showUploadList={{ showRemoveIcon: true }}
+                                >
+                                    <Button>Upload Attachment (PDF)</Button>
+                                </Upload>
+                            </Form.Item>
+                        </div>
                     </div>
                 </Form>
                 <br />
+
                 <Table
-                    dataSource={emailList.map((email, index) => ({ key: index, email }))}
-                    columns={[{
-                        title: <span style={{ color: '#f2e9e4', fontSize: '17px' }}>Emails</span>,
-                        dataIndex: "email",
-                        key: "email",
-                        onHeaderCell: () => ({
-                            style: {
-                                backgroundColor: '#778da9',
-                                color: '#ffffff',
-                            },
-                        }),
-                    }]}
+                    title={() => "Check Details Once! 😊"}
+                    dataSource={excelData}
+                    columns={columns}
+                    bordered
+                    pagination={{ pageSize: 10 }}
+                    style={{ marginTop: 20 }}
+                    scroll={{ x: true }}
                 />
+
+
                 <br />
-                <Button onClick={handleSubmit} className="button-mail">
+                <Checkbox checked={checked} onChange={handleCheckboxChange}>
+                    I agree to send emails
+                </Checkbox>
+                <br />
+                <br />
+                <Button
+                    disabled={!isSendEnabled}
+                    onClick={handleSubmit} className="button-mail">
                     Send Emails
                 </Button>
             </Card>
