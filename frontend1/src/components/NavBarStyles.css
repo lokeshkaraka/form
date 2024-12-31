@@ -1,8 +1,9 @@
 .navbar {
-    padding: 25px;
+    padding: 25px 25px;
     background-color: #282c34;
-    /* background-color: transparent; */
-    /* background: linear-gradient(90deg, #4FB5C8, #E1C5B0); */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .navbar-list {
@@ -10,17 +11,17 @@
     list-style-type: none;
     padding: 0;
     margin: 0;
+    flex: 1;
 }
 
 .navbar-item {
-    margin: 0 10px;
+    margin: 0 15px;
     font-weight: bold;
+    white-space: nowrap;
 }
 
 .navbar-link {
-    /* color: #f77f00; */
-    /* color: #ffbf69; */
-    color: #6fffe9;
+    color: #3191b7;
     font-size: large;
     text-decoration: none;
 }
@@ -30,13 +31,25 @@
     color: #cbf3f0;
 }
 
+.user-actions {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+}
+
 .username {
-    margin-left: 1130px;
-    /* color: #55dde0; */
     color: #ee964b;
     cursor: pointer;
+    margin-right: 10px;
 }
 
 .username-display {
     margin-left: 5px;
+}
+
+.logout-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
 }

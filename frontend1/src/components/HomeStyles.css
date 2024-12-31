@@ -43,7 +43,7 @@ body {
 }
 
 .text-container {
-    margin-bottom: 260px;
+    margin-bottom: 50px;
 }
 
 .text {
@@ -83,6 +83,7 @@ body {
 .image-container {
     flex: 1;
     display: flex;
+    margin-top: 150px;
     justify-content: flex-end;
 }
 
