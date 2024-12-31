@@ -57,7 +57,7 @@ const Home = () => {
                         transform: 'translateX(-50%)',
                         zIndex: 1000,
                         // width: '240px',
-                        width: message === 'Login Successful' ? '240px' : '240px',
+                        width: message === 'Login Crendentials are Wrong' ? '240px' : '180px',
                         textAlign: 'center',
                         color: 'black',
                     }}
