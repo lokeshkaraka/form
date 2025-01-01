@@ -12,7 +12,7 @@ const App = () => {
     <>
       {location.pathname !== '/' && <NavBar />}
       <Routes>
-        <Route exact path="/" element={<Home />} />
+        {location.pathname !== '/product' && <Route exact path="/" element={<Home />} />}
         <Route path="/product" element={<Product />} />
         <Route path="/offer-letter" element={<OfferLetter />} />
       </Routes>
