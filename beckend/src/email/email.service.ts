@@ -15,9 +15,8 @@ export class EmailService {
       service: 'gmail',
       auth: {
         user: senderEmail, pass:
-          // appPassword
           'esnh scug lguh jisc'
-        // 'cszb qlfw owqu gagg'
+        // 'gccl pfsq mimo jcdp' 
       },
     });
 
